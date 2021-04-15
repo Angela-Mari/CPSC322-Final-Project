@@ -152,6 +152,7 @@ def confusion_matrix(y_true, y_pred, labels):
         # convert to int (might be converting in place??)
         if not isinstance(y_true[i], int):
             y_true[i] = labels.index(y_true[i])
+
             y_pred[i] = labels.index(y_pred[i])
         my_matrix[y_true[i]][y_pred[i]] += 1
 

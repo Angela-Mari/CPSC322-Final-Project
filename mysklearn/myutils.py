@@ -81,7 +81,7 @@ def accuracy_errorrate(predicted, actual):
     return tp/len(predicted), (len(predicted)-tp)/len(predicted)
 
 def convert_vals_into_cutoffs(values, cutoffs, lables):
-    """converts to values into cutoffs
+    """converts values into cutoffs
     Args:
         values(list): list of values needing to be converted
         cutoffs(list): list of cutoffs
