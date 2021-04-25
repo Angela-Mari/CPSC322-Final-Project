@@ -157,3 +157,25 @@ def confusion_matrix(y_true, y_pred, labels):
         my_matrix[y_true[i]][y_pred[i]] += 1
 
     return my_matrix 
+
+def random_stratified_test_remainder_set(X, y, set_size=0.33):      
+    stitched_table = myutils.stitch_x_and_y_trains(X, y)
+    header = myutils.get_generic_header(stitched_table)
+    header.append("y")
+    _, group_subtables = myutils.group_by_value(stitched_table, header, "y")
+
+    bins = []
+    for i in range(3):
+        bins.append([])
+
+    # split data into bins
+    index = 0
+    for subtable in group_subtables:
+        for row in subtable:
+            bins[index].append(row)
+            index = (index + 1) % 3
+
+    X_train = bins[0]
+    X_remainder = bins[1] + bins[2]
+    
+    return X_train, X_remainder

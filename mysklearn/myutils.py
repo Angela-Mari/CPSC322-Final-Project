@@ -2,6 +2,49 @@ import mysklearn.mypytable as mypytable
 import random
 import math
 
+def group_by_value(table, header, group_by_col_name):
+    """Returns the data that is grouped together by the passed in column
+    
+    Args:
+        table (list): list of lists representing data that the column will be read from
+        header (list): list of column headings
+        group_by_col_name (string): name of column that the data is to be grouped by 
+    
+    Returns: 
+        group_names (list): list of strings to label the group names
+        group_subtables (list): parallel lists of lists of their subtables
+    """
+    col = get_column(table, header, group_by_col_name)
+    col_index = header.index(group_by_col_name)
+    
+    group_names = sorted(list(set(col))) 
+    group_subtables = [[] for _ in group_names] 
+    for row in table:
+        group_by_value = row[col_index]
+        group_index = group_names.index(group_by_value)
+        group_subtables[group_index].append(row.copy()) # shallow copy
+    
+    return group_names, group_subtables
+
+def get_column(table, header, col_name):
+    """Returns a column using the header and it's column name
+    
+    Args:
+        table (list): list of lists representing data that the column will be read from
+        header (list): list of column headings
+        col_name (string): name of column that is to be returned 
+    
+    Returns: 
+        double: appropriate column from the table 
+    """
+    col_index = header.index(col_name)
+    col = []
+
+    for row in table: 
+        if row[col_index] != "NA":
+            col.append(row[col_index])
+    return col
+
 def group_by(X, y):
     """Groups rows into subtables based on a single column
     

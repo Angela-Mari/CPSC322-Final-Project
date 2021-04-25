@@ -3,6 +3,7 @@ import numpy as np
 import math 
 import operator
 import random
+import mysklearn.myevaluation as myevaluation
 
 
 class MySimpleLinearRegressor:
@@ -603,10 +604,11 @@ class MyRandomForestClassifier:
         self.F = user_F
         self.N = user_N
         self.M = user_M
+        stratified_test, stratified_remainder = myevaluation.random_stratified_test_remainder_set(X_train, y_train)
+        print(len(X_train), len(stratified_test), len(stratified_remainder))
         N_forest = []
-        train = myutils.stitch_x_and_y_trains(self.X_train, self.y_train)  
         for i in range(self.N): 
-            bootstrapped_table = myutils.bootstrap(train)
+            bootstrapped_table = myutils.bootstrap(stratified_remainder)
             available_attributes = myutils.get_generic_header(bootstrapped_table) # TODO: check that this is used for only X_trains
             attribute_domains = myutils.calculate_attribute_domains(bootstrapped_table) # TODO: think about if this should be X_train or "train"
             tree = myutils.tdidt(bootstrapped_table, available_attributes, attribute_domains, self.F)
@@ -614,12 +616,7 @@ class MyRandomForestClassifier:
             N_forest.append(tree)
         
 
-
-
-
-
-
-
+        
         
     def predict(self, X_test):
         """Makes predictions for test instances in X_test.
