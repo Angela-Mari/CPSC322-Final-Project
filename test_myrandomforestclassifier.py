@@ -28,4 +28,4 @@ def test_my_random_forest_fit():
 def test_decision_tree_classifier_predict():
     interview_classifier = MyRandomForestClassifier()
     interview_classifier.fit(interview_table, interview_class_train, 2, 20, 7)
-    assert interview_classifier.predict([["Junior", "Java", "yes", "no"], ["Junior", "Java", "yes", "yes"]]) == ["True", "False"]
+    assert interview_classifier.predict([["Mid", "Java", "yes", "no"], ["Junior", "Python", "no", "yes"]]) == ["True", "False"]

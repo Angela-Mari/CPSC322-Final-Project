@@ -605,18 +605,36 @@ class MyRandomForestClassifier:
         self.N = user_N
         self.M = user_M
         stratified_test, stratified_remainder = myevaluation.random_stratified_test_remainder_set(X_train, y_train)
-        print(len(X_train), len(stratified_test), len(stratified_remainder))
+        train = myutils.stitch_x_and_y_trains(X_train, y_train)
+        attribute_domains = myutils.calculate_attribute_domains(train) # TODO: think about if this should be X_train or "train"
         N_forest = []
-        for i in range(self.N): 
+        for _ in range(self.N): 
             bootstrapped_table = myutils.bootstrap(stratified_remainder)
             available_attributes = myutils.get_generic_header(bootstrapped_table) # TODO: check that this is used for only X_trains
-            attribute_domains = myutils.calculate_attribute_domains(bootstrapped_table) # TODO: think about if this should be X_train or "train"
             tree = myutils.tdidt(bootstrapped_table, available_attributes, attribute_domains, self.F)
-            N_forest.append(i)
             N_forest.append(tree)
+        header = myutils.get_generic_header(stratified_remainder)
+        header.append("y")
+        y_predicted = []
+        y_true = []
+        all_accuracies = []
+        # testing accuracy of N_forest trees to find the top M accuracies 
+        for tree in N_forest:
+            y_predicted_row = []
+            for item in stratified_test:
+                y_predicted_row.append(myutils.tdidt_predict(header, tree, item[:-1])) 
+            y_predicted.append(y_predicted_row)
+    
+        y_true = myutils.get_column(stratified_test, header, "y")
+        for predicted_sublist in y_predicted:
+            accuracy, _ = myutils.accuracy_errorrate(predicted_sublist, y_true)
+            all_accuracies.append(accuracy)
         
-
-        
+        for _ in range(self.M):
+            max_ind = all_accuracies.index(max(all_accuracies))
+            self.forest.append(N_forest[max_ind])
+            all_accuracies[max_ind] = -1
+    
         
     def predict(self, X_test):
         """Makes predictions for test instances in X_test.
@@ -628,4 +646,15 @@ class MyRandomForestClassifier:
         Returns:
             y_predicted(list of obj): The predicted target y values (parallel to X_test)
         """
+        train = myutils.stitch_x_and_y_trains(self.X_train, self.y_train)
+        header = myutils.get_generic_header(train)
         
+        y_predicted = []
+        for test in X_test:
+            tree_predictions = []
+            for tree in self.forest:
+                tree_predictions.append(myutils.tdidt_predict(header, tree, test))
+            y_predicted.append(myutils.majority_vote_predictions(tree_predictions))
+
+        return y_predicted
+

@@ -388,6 +388,7 @@ def tdidt_predict(header, tree, instance):
                 return tdidt_predict(header, value_list[2], instance)
     else: # Leaf
         return tree[1] # label
+
 def tdit_print_decision_rules(tree, attribute_names, class_name, rule):
     """ recursive call to create decision rules
         Args: 
@@ -431,3 +432,19 @@ def random_attribute_subset(attributes, F):
     shuffled = attributes[:] # make a copy
     random.shuffle(shuffled)
     return shuffled[:F]
+
+def majority_vote_predictions(predicitons):
+    """picks the majority choice 
+        Args: partiton(list of list): current items that need a majority vote
+        Returns: the majority choice
+    """
+    options = []
+    votes = []
+    for item in predicitons:
+        if item in options:
+            votes[options.index(item)] += 1
+        else:
+            options.append(item)
+            votes.append(1)
+    
+    return options[votes.index(max(votes))]

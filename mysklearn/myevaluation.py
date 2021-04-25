@@ -165,7 +165,7 @@ def random_stratified_test_remainder_set(X, y, set_size=0.33):
     _, group_subtables = myutils.group_by_value(stitched_table, header, "y")
 
     bins = []
-    for i in range(3):
+    for _ in range(3):
         bins.append([])
 
     # split data into bins
