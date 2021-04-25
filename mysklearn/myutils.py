@@ -1,5 +1,4 @@
 import mysklearn.mypytable as mypytable
-from mysklearn.myclassifiers import MyDecisionTreeClassifier
 import random
 import math
 
@@ -128,7 +127,7 @@ def stitch_x_and_y_trains(X_train, y_train):
     """
     stitched_table = []
     for i in range(len(X_train)):
-        stitched_table.append(X_train[i])
+        stitched_table.append(X_train[i].copy())
         stitched_table[i].append(y_train[i])
     return stitched_table
 
@@ -268,7 +267,7 @@ def calcualte_entropy(instances, available_attributes):
     entropy_index = enews_attribute.index(min(enews_attribute))
     return available_attributes[entropy_index]
     
-def tdidt(current_instances, available_attributes, attribute_domains):
+def tdidt(current_instances, available_attributes, attribute_domains, F):
     """recursive call to build the tree
         Args:
             current_instances(list of lists): should be the full list (X_train and y_train combined)
@@ -277,6 +276,8 @@ def tdidt(current_instances, available_attributes, attribute_domains):
         Returns: 
             tree(list of list)
     """
+    if F != None:
+        available_attributes = random_attribute_subset(available_attributes, F)
     # basic approach (uses recursion!!):
     # select an attribute to split on based on entropy, 
     split_attribute = calcualte_entropy(current_instances, available_attributes)
@@ -311,7 +312,7 @@ def tdidt(current_instances, available_attributes, attribute_domains):
             tree = ["Leaf", majority, len(partition), len(current_instances)]
             break
         else: # all base cases are false, recurse!!
-            subtree = tdidt(partition, available_attributes.copy(), attribute_domains)
+            subtree = tdidt(partition, available_attributes.copy(), attribute_domains, F)
             values_subtree.append(subtree)
 
         if tree != values_subtree: # if there are new values to add
@@ -374,3 +375,16 @@ def tdit_print_decision_rules(tree, attribute_names, class_name, rule):
             print(rule)
             return
 
+def bootstrap(table):
+    n = len(table)
+    sample = []
+    for _ in range(n):
+        rand_index = random.randrange(0, n)
+        sample.append(table[rand_index])
+    return sample
+    
+def random_attribute_subset(attributes, F):
+    # shuffle and pick first F
+    shuffled = attributes[:] # make a copy
+    random.shuffle(shuffled)
+    return shuffled[:F]

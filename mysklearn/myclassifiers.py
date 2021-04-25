@@ -509,7 +509,7 @@ class MyDecisionTreeClassifier:
         available_attributes = myutils.get_generic_header(X_train) # TODO: check that this is used for only X_trains
         attribute_domains = myutils.calculate_attribute_domains(X_train) # TODO: think about if this should be X_train or "train"
         
-        self.tree = myutils.tdidt(train, available_attributes, attribute_domains)
+        self.tree = myutils.tdidt(train, available_attributes, attribute_domains, None)
         
     def predict(self, X_test):
         """Makes predictions for test instances in X_test.
@@ -557,3 +557,78 @@ class MyDecisionTreeClassifier:
             You will need to install graphviz in the Docker container as shown in class to complete this method.
         """
         pass # TODO: (BONUS) fix this
+
+class MyRandomForestClassifier:
+    """Represents a random forest classifier.
+
+    Attributes:
+        X_train(list of list of obj): The list of training instances (samples). 
+                The shape of X_train is (n_train_samples, n_features)
+        y_train(list of obj): The target y values (parallel to X_train). 
+            The shape of y_train is n_samples
+        forest (nested list): The extracted list of tree models in the forest.
+        M (int): a the size subset of the most accurate trees in the forest
+        N (int): the total number of trees in the forest
+        F (int): the size of the subset of available attributes 
+        random_state (int): integer used for seeding a random number generator for reproducible results
+
+    """
+    def __init__(self):
+        """Initializer for MyRandomForestClassifier.
+
+        """
+        self.X_train = None 
+        self.y_train = None
+        self.forest = []
+        self.M = None
+        self.N = None
+        self.F = None
+        self.random_state = None
+
+    def fit(self, X_train, y_train, user_F, user_N, user_M, random_state=None):
+        """Fits a random forest classifier to X_train and y_train.
+
+        Args:
+            X_train(list of list of obj): The list of training instances (samples). 
+                The shape of X_train is (n_train_samples, n_features)
+            y_train(list of obj): The target y values (parallel to X_train)
+                The shape of y_train is n_train_samples
+        """
+        if random_state is not None:
+        # store seed 
+            self.random_state = random_state
+            np.random.seed(self.random_state)
+        self.X_train = X_train
+        self.y_train = y_train
+        self.F = user_F
+        self.N = user_N
+        self.M = user_M
+        N_forest = []
+        train = myutils.stitch_x_and_y_trains(self.X_train, self.y_train)  
+        for i in range(self.N): 
+            bootstrapped_table = myutils.bootstrap(train)
+            available_attributes = myutils.get_generic_header(bootstrapped_table) # TODO: check that this is used for only X_trains
+            attribute_domains = myutils.calculate_attribute_domains(bootstrapped_table) # TODO: think about if this should be X_train or "train"
+            tree = myutils.tdidt(bootstrapped_table, available_attributes, attribute_domains, self.F)
+            N_forest.append(i)
+            N_forest.append(tree)
+        
+
+
+
+
+
+
+
+        
+    def predict(self, X_test):
+        """Makes predictions for test instances in X_test.
+
+        Args:
+            X_test(list of list of obj): The list of testing samples
+                The shape of X_test is (n_test_samples, n_features)
+
+        Returns:
+            y_predicted(list of obj): The predicted target y values (parallel to X_test)
+        """
+        
