@@ -1,4 +1,5 @@
 import mysklearn.mypytable as mypytable
+import matplotlib.pyplot as plt
 import random
 import math
 
@@ -448,3 +449,54 @@ def majority_vote_predictions(predicitons):
             votes.append(1)
     
     return options[votes.index(max(votes))]
+
+def bar_chart(x, y):
+    """Displays bar chart of data passed in
+    
+    Args:
+        x: list of categorical data for x axis
+        y: the cateogories frequencies for y axis
+    
+    """
+    if len(x) > 12:
+        plt.figure(figsize=(18,5))
+    else: 
+        plt.figure()
+    plt.bar(x, y, width=.5)
+    plt.xticks(x, rotation=45, horizontalalignment="right", size='small')
+    plt.show()
+
+def get_frequencies(table, header, col_name):
+    """Returns the frequencies of the data from a column of a table that is passed in
+    
+    Args:
+        table (list): list of lists representing data that the column will be read from
+        header (list): list of column headings
+        col_name (string): name of column that is to be returned 
+    
+    Returns: 
+        values (list): list of things that were counted 
+        counts (list): parallel lists of their counts
+    """
+    col = get_column(table, header, col_name)
+    for i in range(len(col)):
+        item = str(col[i])
+        col[i] = item
+    col.sort()
+    values = []
+    counts = []
+
+    for value in col:
+        if value not in values:
+            values.append(value)
+            counts.append(1)
+        else:
+            counts[-1] += 1 # list is sorted
+    return values, counts
+
+def replace_values_in_column(value1, value2, table, header, col_name):
+    col_index = header.index(col_name)
+    for i in range(len(table)):
+        if table[i][col_index] == value1:
+            table[i][col_index] = value2
+    pass
