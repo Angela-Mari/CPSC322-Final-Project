@@ -158,7 +158,15 @@ def confusion_matrix(y_true, y_pred, labels):
 
     return my_matrix 
 
-def random_stratified_test_remainder_set(X, y, set_size=0.33):      
+def random_stratified_test_remainder_set(X, y, random_state, set_size=0.33):  
+    # does not seem random?
+    if random_state is not None:
+        # store seed 
+            random_state = random_state
+            np.random.seed(random_state)
+    
+    randomize_in_place(X,y)
+
     stitched_table = myutils.stitch_x_and_y_trains(X, y)
     header = myutils.get_generic_header(stitched_table)
     header.append("y")

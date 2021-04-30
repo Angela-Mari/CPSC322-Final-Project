@@ -1,5 +1,7 @@
 import mysklearn.myutils as myutils
 import numpy as np
+from numpy.random import MT19937
+from numpy.random import RandomState, SeedSequence
 import math 
 import operator
 import random
@@ -604,12 +606,13 @@ class MyRandomForestClassifier:
         self.F = user_F
         self.N = user_N
         self.M = user_M
-        stratified_test, stratified_remainder = myevaluation.random_stratified_test_remainder_set(X_train, y_train)
+        stratified_test, stratified_remainder = myevaluation.random_stratified_test_remainder_set(X_train, y_train, random_state)
         train = myutils.stitch_x_and_y_trains(X_train, y_train)
         attribute_domains = myutils.calculate_attribute_domains(train) # TODO: think about if this should be X_train or "train"
         N_forest = []
-        for _ in range(self.N): 
-            bootstrapped_table = myutils.bootstrap(stratified_remainder)
+
+        for i in range(self.N): 
+            bootstrapped_table = myutils.bootstrap(stratified_remainder, random_state)
             available_attributes = myutils.get_generic_header(bootstrapped_table) # TODO: check that this is used for only X_trains
             tree = myutils.tdidt(bootstrapped_table, available_attributes, attribute_domains, self.F)
             N_forest.append(tree)

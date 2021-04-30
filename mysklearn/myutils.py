@@ -1,7 +1,10 @@
 import mysklearn.mypytable as mypytable
 import matplotlib.pyplot as plt
 import random
+import numpy as np
 import math
+from numpy.random import MT19937
+from numpy.random import RandomState, SeedSequence
 
 def group_by_value(table, header, group_by_col_name):
     """Returns the data that is grouped together by the passed in column
@@ -420,11 +423,16 @@ def tdit_print_decision_rules(tree, attribute_names, class_name, rule):
             print(rule)
             return
 
-def bootstrap(table):
+def bootstrap(table, random_state):
+    if random_state is not None:
+        # store seed 
+        random_state = random_state
+        np.random.seed(random_state)
+    
     n = len(table)
     sample = []
     for _ in range(n):
-        rand_index = random.randrange(0, n)
+        rand_index = np.random.randint(0, n)
         sample.append(table[rand_index])
     return sample
     
