@@ -632,7 +632,6 @@ class MyRandomForestClassifier:
         for predicted_sublist in y_predicted:
             accuracy, _ = myutils.accuracy_errorrate(predicted_sublist, y_true)
             all_accuracies.append(accuracy)
-        
         for _ in range(self.M):
             max_ind = all_accuracies.index(max(all_accuracies))
             self.forest.append(N_forest[max_ind])
@@ -651,7 +650,6 @@ class MyRandomForestClassifier:
         """
         train = myutils.stitch_x_and_y_trains(self.X_train, self.y_train)
         header = myutils.get_generic_header(train)
-        
         y_predicted = []
         for test in X_test:
             tree_predictions = []
