@@ -1,7 +1,7 @@
 import mysklearn.myutils as myutils
 import copy
 import csv 
-from tabulate import tabulate 
+# from tabulate import tabulate 
 
 # provided unit tests are in test_mypytable.py
 # do not modify this class name, required function/method headers, or the unit tests
@@ -25,10 +25,10 @@ class MyPyTable:
             data = []
         self.data = copy.deepcopy(data)
 
-    def pretty_print(self):
+    '''def pretty_print(self):
         """Prints the table in a nicely formatted grid structure.
         """
-        print(tabulate(self.data, headers=self.column_names))
+        print(tabulate(self.data, headers=self.column_names))'''
 
     def get_shape(self):
         """Computes the dimension of the table (N x M).
