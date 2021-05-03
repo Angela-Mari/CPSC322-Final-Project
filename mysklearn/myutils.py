@@ -371,7 +371,7 @@ def tdidt(current_instances, available_attributes, attribute_domains, F):
 # 7. move on to predict()...
 
 def tdidt_predict(header, tree, instance):
-    """ recusrive call to find prediciton
+    """ recursive call to find prediciton
         Args:
             header(list of str): the header for the tree
             tree(list of list): the tree to parse
@@ -508,3 +508,103 @@ def replace_values_in_column(value1, value2, table, header, col_name):
         if table[i][col_index] == value1:
             table[i][col_index] = value2
     pass
+
+def convert_bool_to_numerical_value(col, attributes):
+    '''Converts attributes with only positive and negative in their domain to numerical values of 1 for positive and 0 for negative
+
+    Args:
+        col (list) : column of attribute that is to be converted
+        attributes (list) : list of attribute domain with positive value in index 0 and negative value in index 1
+    
+    returns:
+        converted_col (list) : new column with converted values
+    '''
+    converted_col = []
+    for item in col:
+        if item == attributes[0]:
+            converted_col.append(1)
+        else:
+            converted_col.append(0)
+    
+    return converted_col
+
+def calculate_linear_regression(x, y):
+    """Returns slope and y intercept of data passed in
+    
+    Args:
+        x (list): list of numerical data from the x axis
+        y (list): list of numerical data from y axis 
+    
+    Returns: 
+        m (float): slope of data
+        b (float): y intercept of data
+    """
+    num = 0
+    x_avg = sum(x)/len(x)
+    y_avg = sum(y)/len(y)
+    
+    m = sum([(x[i] - x_avg) * (y[i] - y_avg) for i in range(len(x))]) / sum([(x[i] - x_avg) ** 2 for i in range(len(x))])
+    b = y_avg - m*x_avg
+
+    return m, b
+
+def scatter_plot(x, y, m, b, xlabel, ylabel):
+    """Displays scatter plot and corresponding linear regression of data passed in
+    
+    Args:
+        x (list): list of data for x axis
+        y (list): list of data for y axis
+        m (float): slope of data
+        b (float): y intercept of data
+        xlabel (string): label for x axis
+        ylabel (string): label for y axis
+    
+    """
+    x_avg = sum(x)/len(x)
+    y_avg = sum(y)/len(y)
+    
+    covariance = (sum([(x[i] - x_avg) * (y[i] - y_avg) for i in range(len(x))])) / (len(x)-1) 
+    correlation = (sum([(x[i] - x_avg) * (y[i] - y_avg) for i in range(len(x))])) / (math.sqrt(sum([(x[i] - x_avg) **2 for i in range(len(x))])) * math.sqrt(sum([(y[i] - y_avg)**2 for i in range(len(y))])))
+    plt.figure()
+    plt.plot([min(x), max(x)], [m*min(x) + b, m*max(x)+b], c="r", lw=5)
+    plt.scatter(x, y, label=f'Correlation ={correlation}\n Covariance ={covariance}')
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.show()
+
+def pie_chart(labs, data):
+    """Displays pie chart of data passed in
+    
+    Args:
+        lab: list of labels for the data
+        y: list of lists of data that is to be read into pie chart
+    
+    """
+    plt.figure()
+    plt.pie(data, labels=labs, autopct="%1.1f%%")
+    plt.show()
+
+def histogram(data):
+    """Displays histogram chart of data passed in
+    
+    Args:
+        data: 1D list of data values
+    """
+    plt.figure()
+    plt.hist(data, bins=10)
+    plt.xticks(rotation=45, horizontalalignment="right")
+    plt.show()
+
+def box_plot(distributions, labels):
+    """Displays box plot of distributions passed in
+    
+    Args:
+        distributions (list): list of distributions to be plotted
+        labels (list): list of labels to label to label each x plot
+    
+    """
+    plt.figure(figsize= (18, 5))
+    plt.boxplot(distributions)
+    plt.xticks(list(range(1, len(labels) + 1)), labels, rotation=45, horizontalalignment="right")
+    plt.show()
