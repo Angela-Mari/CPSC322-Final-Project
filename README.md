@@ -1,5 +1,5 @@
 # CPSC322-Final-Project 🤖
-This is Mia Brasil and Angela George's final data science project. The project uses a Random Forest Classifier to make predictions on if students from the input dataset will pass their online classes. The Random Forest Classifer was pickeled and deployed on Heroku as an API that lets others input a query string to get a prediction for their student's parameters. 
+This is Mia Brasil and Angela George's final data science project. The project uses a Random Forest Classifier to make predictions on if students from the input dataset will pass their online classes. The Random Forest Classifer was pickled and deployed on Heroku as an API that lets others input a query string to get a prediction for their student's parameters. 
 
 ## How to run 🧑‍💻
 To run this project on your local machine, simply clone the repo and run the result_app.py file. 
@@ -34,6 +34,7 @@ This project is organized into:
 * input_data which was the data we got from [Open University Learning Analytics](https://analyse.kmi.open.ac.uk/open_dataset)
 * mysklearn which is a folder of from scratch evaluators and classifers based on Scikit learn.
 * test_myrandomforestclassifier.py which tests the classifier
+
 * a Technical Report Jupyter Notebook which visualizes data and findings
 * python (flask) and heroku files for deployment
 
