@@ -32,9 +32,9 @@ To get a prediction here is an example query string:
 This project is organized into: 
 
 * input_data which was the data we got from [Open University Learning Analytics](https://analyse.kmi.open.ac.uk/open_dataset)
+* output_data which holds the cleaned dataset and the accuracies of the classifiers
 * mysklearn which is a folder of from scratch evaluators and classifers based on Scikit learn.
 * test_myrandomforestclassifier.py which tests the classifier
-
 * a Technical Report Jupyter Notebook which visualizes data and findings
 * python (flask) and heroku files for deployment
 
