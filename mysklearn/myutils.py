@@ -126,7 +126,7 @@ def accuracy_errorrate(predicted, actual):
     
     return tp/len(predicted), (len(predicted)-tp)/len(predicted)
 
-def convert_vals_into_cutoffs(values, cutoffs, lables):
+def convert_vals_into_cutoffs(table, header, col_name, cutoffs, lables):
     """converts values into cutoffs
     Args:
         values(list): list of values needing to be converted
@@ -135,17 +135,18 @@ def convert_vals_into_cutoffs(values, cutoffs, lables):
     Notes:
         converts in place!
     """
-    for i in range(len(values)):
-        if values[i] >= cutoffs[-1]:
-            values[i] = lables[-1]
+    col_index = header.index(col_name)
+    for i in range(len(table)):
+        if table[i][col_index] >= cutoffs[-1]:
+            table[i][col_index] = lables[-1]
             continue
-        if values[i] <= cutoffs[0]:
-            values[i] = lables[0]
+        if table[i][col_index] <= cutoffs[0]:
+            table[i][col_index] = lables[0]
             continue
         j = i
         for j in range(len(cutoffs) - 1):
-            if cutoffs[j] <= values[i] < cutoffs[j + 1]:
-                values[i] = lables[j]
+            if cutoffs[j] <= table[i][col_index] < cutoffs[j + 1]:
+                table[i][col_index] = lables[j]
 
 def get_x_and_y_trains(table):
     """splits a table into an X_train and y_train

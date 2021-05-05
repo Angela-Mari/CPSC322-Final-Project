@@ -5,7 +5,7 @@ Stratified 10-Fold Cross Validation
 Zero Rules Classifier: accuracy = 0.5344959024204308 error rate = 0.4655040975795693
 Naive Bayes: accuracy = 0.6032018296169239 error rate = 0.396798170383076
 Tree: accuracy = 0.5547932151705737 error rate = 0.4452067848294263
-Random Forest: accuracy = 0.5873832666285497 error rate = 0.41261673337145033
+Random Forest: accuracy = 0.5867162187916904 error rate = 0.4132837812083095
 Decision Tree (Stratified 10 Fold Cross Validation Results)
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
@@ -15,39 +15,39 @@ Random Forest (Stratified 10 Fold Cross Validation Results)
 F = 5, N = 20, M = 7
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
-Pass              2632    2253     4885          53.8792
-Fail              2077    3532     5609          62.9702
+Pass              2542    2343     4885          52.0368
+Fail              1994    3615     5609          64.45
 F = 5, N = 5, M = 3
-Random Forest: accuracy = 0.5787116447493806 error rate = 0.4212883552506194
+Random Forest: accuracy = 0.584333905088622 error rate = 0.4156660949113779
 Random Forest (Stratified 10 Fold Cross Validation Results)
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
-Pass              2413    2472     4885          49.3961
-Fail              1949    3660     5609          65.2523
+Pass              2477    2408     4885          50.7062
+Fail              1954    3655     5609          65.1631
 F = 5, N = 50, M = 10
-Random Forest: accuracy = 0.5834762721555175 error rate = 0.41652372784448255
+Random Forest: accuracy = 0.5867162187916904 error rate = 0.4132837812083095
 Random Forest (Stratified 10 Fold Cross Validation Results)
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
-Pass              2649    2236     4885          54.2272
-Fail              2135    3474     5609          61.9362
+Pass              2655    2230     4885          54.3501
+Fail              2107    3502     5609          62.4354
 F = 8, N = 20, M = 7
-Random Forest: accuracy = 0.5507909281494188 error rate = 0.4492090718505813
+Random Forest: accuracy = 0.5639412997903563 error rate = 0.4360587002096436
 Random Forest (Stratified 10 Fold Cross Validation Results)
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
-Pass              2363    2522     4885          48.3726
-Fail              2192    3417     5609          60.92
+Pass              2328    2557     4885          47.6561
+Fail              2019    3590     5609          64.0043
 F = 3, N = 20, M = 7
-Random Forest: accuracy = 0.5897655803316181 error rate = 0.4102344196683819
+Random Forest: accuracy = 0.5857632933104632 error rate = 0.4142367066895369
 Random Forest (Stratified 10 Fold Cross Validation Results)
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
-Pass              2408    2477     4885          49.2938
-Fail              1828    3781     5609          67.4095
-Random Forest: accuracy = 0.6229792147806005 error rate = 0.3770207852193995
+Pass              2379    2506     4885          48.7001
+Fail              1841    3768     5609          67.1778
+Random Forest: accuracy = 0.5955542725173211 error rate = 0.404445727482679
 Random Forest (Stratified 10 Fold Cross Validation Results)
 Final Result      Pass    Fail    total    Recognition %
 --------------  ------  ------  -------  ---------------
-Pass               871     738     1609          54.133
-Fail               568    1287     1855          69.3801
+Pass               840     769     1609          52.2063
+Fail               632    1223     1855          65.9299
